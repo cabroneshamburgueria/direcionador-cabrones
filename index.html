@@ -47,10 +47,24 @@
       color: #022c22;
     }
 
+    .action-btn {
+      background: #3b82f6;
+    }
+
+    .action-btn:hover {
+      background: #2563eb;
+    }
+
     .loading {
       margin-top: 10px;
       font-size: 14px;
       color: #94a3b8;
+    }
+
+    .distance {
+      font-size: 13px;
+      color: #cbd5f5;
+      margin-top: 5px;
     }
   </style>
 </head>
@@ -59,20 +73,25 @@
   <div class="container">
     <h1>Escolha a unidade mais próxima</h1>
 
+    <button id="geoBtn" class="btn action-btn">
+      Usar minha localização
+    </button>
+
     <a id="loja1" class="btn" href="https://link-da-sua-loja1.com">
       Unidade Bairro A
+      <div id="dist1" class="distance"></div>
     </a>
 
     <a id="loja2" class="btn" href="https://link-da-sua-loja2.com">
       Unidade Bairro B
+      <div id="dist2" class="distance"></div>
     </a>
 
-    <div id="status" class="loading">Detectando sua localização...</div>
+    <div id="status" class="loading"></div>
   </div>
 
   <script>
-    // Coordenadas das suas unidades (ALTERE AQUI)
-    const loja1 = { lat: -7.111623734753553,  lon: -34.841415976983 }; // Exemplo João Pessoa, 
+    const loja1 = { lat: -7.111623734753553, lon: -34.841415976983 };
     const loja2 = { lat: -7.176183672854079, lon: -34.868770442799 };
 
     function calcularDistancia(lat1, lon1, lat2, lon2) {
@@ -90,34 +109,44 @@
       return R * c;
     }
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function(position) {
-          const userLat = position.coords.latitude;
-          const userLon = position.coords.longitude;
+    document.getElementById("geoBtn").addEventListener("click", function() {
+      const status = document.getElementById("status");
+      status.innerText = "Detectando sua localização...";
 
-          const dist1 = calcularDistancia(userLat, userLon, loja1.lat, loja1.lon);
-          const dist2 = calcularDistancia(userLat, userLon, loja2.lat, loja2.lon);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
 
-          const status = document.getElementById("status");
+            const dist1 = calcularDistancia(userLat, userLon, loja1.lat, loja1.lon);
+            const dist2 = calcularDistancia(userLat, userLon, loja2.lat, loja2.lon);
 
-          if (dist1 < dist2) {
-            document.getElementById("loja1").classList.add("highlight");
-            status.innerText = "Mostrando unidade mais próxima de você";
-          } else {
-            document.getElementById("loja2").classList.add("highlight");
-            status.innerText = "Mostrando unidade mais próxima de você";
+            // Mostrar distâncias
+            document.getElementById("dist1").innerText = dist1.toFixed(2) + " km de você";
+            document.getElementById("dist2").innerText = dist2.toFixed(2) + " km de você";
+
+            // Reset highlight
+            document.getElementById("loja1").classList.remove("highlight");
+            document.getElementById("loja2").classList.remove("highlight");
+
+            // Destacar mais próxima
+            if (dist1 < dist2) {
+              document.getElementById("loja1").classList.add("highlight");
+              status.innerText = "Unidade mais próxima destacada";
+            } else {
+              document.getElementById("loja2").classList.add("highlight");
+              status.innerText = "Unidade mais próxima destacada";
+            }
+          },
+          function() {
+            status.innerText = "Não foi possível acessar sua localização.";
           }
-        },
-        function() {
-          document.getElementById("status").innerText =
-            "Não foi possível acessar sua localização.";
-        }
-      );
-    } else {
-      document.getElementById("status").innerText =
-        "Geolocalização não suportada.";
-    }
+        );
+      } else {
+        status.innerText = "Geolocalização não suportada.";
+      }
+    });
   </script>
 </body>
 </html>
