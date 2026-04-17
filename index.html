@@ -16,17 +16,19 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      padding-top: 2rem;
+      padding: 2rem 1rem 0rem;
+      font-size: large;
     }
 
     .container {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        width: 100%;
     }
 
     .btn {
-      padding: 10px 25px;
+      padding: 10px 25px 5px;
       width: 100;
       border-radius: 10px;
       text-decoration: none;
@@ -58,6 +60,9 @@
         padding: 5px;
         width: 100%;
         margin-bottom: 1rem;
+        font-size: large;
+        border-radius: 1rem;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     }
 
     .action-btn:hover {
@@ -69,6 +74,7 @@
       margin-top: 10px;
       font-size: 14px;
       color: #94a3b8;
+      align-self: center;
     }
 
     .distance {
@@ -84,7 +90,7 @@
     }
 
     .btn-img {
-        width: 250px;
+        width: 300px;
     }
 
     .icon{
@@ -97,6 +103,13 @@
         justify-content: center;
         gap: 8px;
     }
+
+    @media only screen and (min-width: 950px){
+    
+    .container{
+        width: 500px;
+    }
+}
   </style>
 </head>
 
@@ -124,7 +137,7 @@
       <div id="dist2" class="distance"></div>
     </a>
 
-    <div id="status" class="loading"></div>
+    <div id="status" class="loading" ></div>
 
     <span>
         <img class="icon" src="assets/support.svg" alt="support">
@@ -132,14 +145,14 @@
     </span>
 
     <a id="loja1" class="btn" href="http://wa.me/5583988519090">
-        <span>
+        <span style="padding-bottom: 5px;">
             <img style="height: 15px;" src="assets/whatsapp.svg" alt="whatsapp">
             Unidade BRISAMAR
         </span>
     </a>
 
     <a id="loja2" class="btn" href="http://wa.me/5583981746884">
-        <span>
+        <span style="padding-bottom: 5px;">
             <img style="height: 15px;" src="assets/whatsapp.svg" alt="whatsapp">
             Unidade ZONA SUL
         </span>
