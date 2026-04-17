@@ -7,8 +7,10 @@
 
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
+        display: flex;
+        flex-direction: column;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      background: linear-gradient(#17171B,#0B0B0D);
       color: white;
       display: flex;
       align-items: center;
@@ -18,41 +20,49 @@
     }
 
     .container {
-      text-align: center;
-    }
-
-    h1 {
-      margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .btn {
-      display: block;
-      margin: 10px auto;
-      padding: 15px 25px;
-      width: 250px;
+      padding: 10px 25px;
+      width: 100;
       border-radius: 10px;
       text-decoration: none;
-      font-weight: bold;
       transition: 0.3s;
-      background: #1e293b;
+      background: linear-gradient(#3d3d3f6e,#60606869);
       color: white;
+      border: 1px solid;
+      border-color: rgba(255, 255, 255, 0.185);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
     }
 
     .btn:hover {
-      background: #334155;
+      background: #595c61;
     }
 
-    .highlight {
-      background: #22c55e !important;
-      color: #022c22;
-    }
+
 
     .action-btn {
-      background: #3b82f6;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        background: linear-gradient(#0000009d,#35353591);
+        color: white;
+        font-weight: bold;
+        padding: 5px;
+        width: 100%;
+        margin-bottom: 1rem;
     }
 
     .action-btn:hover {
-      background: #2563eb;
+      background: #303235;
+      color: white;
     }
 
     .loading {
@@ -66,28 +76,74 @@
       color: #cbd5f5;
       margin-top: 5px;
     }
+
+    .highlight {
+      /*background: #22c55e !important;*/
+      border: 2px solid #22c55e;
+      color: #000000;
+    }
+
+    .btn-img {
+        width: 250px;
+    }
+
+    .icon{
+        height: 20px;
+    }
+
+    span{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
   </style>
 </head>
 
 <body>
+    <img style="width: 250px; margin-bottom: 4rem;" src="assets/titulo cabrones.svg" alt=""/>
   <div class="container">
-    <h1>Escolha a unidade mais próxima</h1>
+
+    <span>
+        <img class="icon" src="assets/search.svg" alt="search">
+        Verifique qual a unidade mais próxima!
+    </span>
 
     <button id="geoBtn" class="btn action-btn">
+        <img style="height: 15px;" src="assets/location.svg" alt="location">
       Usar minha localização
     </button>
 
-    <a id="loja1" class="btn" href="https://link-da-sua-loja1.com">
-      Unidade Bairro A
+    <a id="loja1" class="btn" href="https://hamburgueriacabrones.com.br/cabrones_hamburgueria">
+      <img class="btn-img" src="assets/brisamar.svg" alt="brisamar">
       <div id="dist1" class="distance"></div>
     </a>
 
-    <a id="loja2" class="btn" href="https://link-da-sua-loja2.com">
-      Unidade Bairro B
+    <a id="loja2" class="btn" href="https://app.cardapioweb.com/cabrones_hamburgueria__2">
+      <img class="btn-img" src="assets/zonasul.svg" alt="zonasul">
       <div id="dist2" class="distance"></div>
     </a>
 
     <div id="status" class="loading"></div>
+
+    <span>
+        <img class="icon" src="assets/support.svg" alt="support">
+        Suporte online para dúvidas:
+    </span>
+
+    <a id="loja1" class="btn" href="http://wa.me/5583988519090">
+        <span>
+            <img style="height: 15px;" src="assets/whatsapp.svg" alt="whatsapp">
+            Unidade BRISAMAR
+        </span>
+    </a>
+
+    <a id="loja2" class="btn" href="http://wa.me/5583981746884">
+        <span>
+            <img style="height: 15px;" src="assets/whatsapp.svg" alt="whatsapp">
+            Unidade ZONA SUL
+        </span>
+    </a>
   </div>
 
   <script>
