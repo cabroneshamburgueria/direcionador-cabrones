@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Escolha sua unidade</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: block;
+      margin: 10px auto;
+      padding: 15px 25px;
+      width: 250px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+      background: #1e293b;
+      color: white;
+    }
+
+    .btn:hover {
+      background: #334155;
+    }
+
+    .highlight {
+      background: #22c55e !important;
+      color: #022c22;
+    }
+
+    .loading {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Escolha a unidade mais próxima</h1>
+
+    <a id="loja1" class="btn" href="https://link-da-sua-loja1.com">
+      Unidade Bairro A
+    </a>
+
+    <a id="loja2" class="btn" href="https://link-da-sua-loja2.com">
+      Unidade Bairro B
+    </a>
+
+    <div id="status" class="loading">Detectando sua localização...</div>
+  </div>
+
+  <script>
+    // Coordenadas das suas unidades (ALTERE AQUI)
+    const loja1 = { lat: -7.111623734753553,  lon: -34.841415976983 }; // Exemplo João Pessoa, 
+    const loja2 = { lat: -7.176183672854079, lon: -34.868770442799 };
+
+    function calcularDistancia(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+
+      const a =
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          const userLat = position.coords.latitude;
+          const userLon = position.coords.longitude;
+
+          const dist1 = calcularDistancia(userLat, userLon, loja1.lat, loja1.lon);
+          const dist2 = calcularDistancia(userLat, userLon, loja2.lat, loja2.lon);
+
+          const status = document.getElementById("status");
+
+          if (dist1 < dist2) {
+            document.getElementById("loja1").classList.add("highlight");
+            status.innerText = "Mostrando unidade mais próxima de você";
+          } else {
+            document.getElementById("loja2").classList.add("highlight");
+            status.innerText = "Mostrando unidade mais próxima de você";
+          }
+        },
+        function() {
+          document.getElementById("status").innerText =
+            "Não foi possível acessar sua localização.";
+        }
+      );
+    } else {
+      document.getElementById("status").innerText =
+        "Geolocalização não suportada.";
+    }
+  </script>
+</body>
+</html>
